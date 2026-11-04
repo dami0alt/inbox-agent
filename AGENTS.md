@@ -24,9 +24,10 @@ trade-offs briefly and prefer simple, conventional solutions.
 ## Environments and workflow
 - Dev machines: Linux, and Windows via WSL2 (projects live in the Linux
   filesystem, never /mnt/c). Possibly macOS later. Linux is the source of truth.
-- `main` is production: protected, changes via PR from short-lived branches.
-  Note: the repo is private on GitHub Free, where branch protection is not
-  enforced; until that changes (issue #3) the PR-only rule is by convention.
+- `main` is production: protected by the `protect-main` ruleset (PR required,
+  squash merge only, linear history, no force-push or deletion). The repo is
+  public, so never commit secrets or real emails (secret scanning and push
+  protection are on). Required status check `ci` is added once CI exists.
 - CI: GitHub Actions on ubuntu-latest (ruff, pytest, later mypy). The job is
   named `ci` so it can be a required check and Railway can wait for it.
 - CD: the Railway service is linked to `main` with "Wait for CI" enabled:
